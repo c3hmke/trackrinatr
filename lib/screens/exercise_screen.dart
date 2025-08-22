@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trackrinatr/models/workout.dart';
+import 'package:trackrinatr/widgets/frosted_card.dart';
 import 'package:trackrinatr/widgets/gradient_background.dart';
 
 class ExerciseScreen extends StatefulWidget {
@@ -33,22 +34,18 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
             ...widget.workout.exercises.asMap().entries.map((entry) {
               final index = entry.key;
               final exercise = entry.value;
-              return Container(
-                margin: const EdgeInsets.only(bottom: 16),
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.white10,
-                  borderRadius: BorderRadius.circular(16),
-                ),
+              return FrostedCard(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+
                     Text(exercise.name,
                         style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Colors.white)),
                     const SizedBox(height: 12),
+
                     Text("Working Weight",
                         style: TextStyle(color: Colors.blue[200], fontSize: 12)),
                     Text("${exercise.currentWeight}",
@@ -57,6 +54,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                             fontWeight: FontWeight.bold,
                             color: Colors.white)),
                     const SizedBox(height: 12),
+
                     Text("Warmup Weights",
                         style: TextStyle(color: Colors.blue[200], fontSize: 12)),
                     Wrap(
@@ -70,6 +68,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                           .toList(),
                     ),
                     const SizedBox(height: 12),
+
                     Text("Sets Completed",
                         style: TextStyle(color: Colors.blue[200], fontSize: 12)),
                     Row(
@@ -109,6 +108,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                 ),
               );
             }),
+
             ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.purple,
