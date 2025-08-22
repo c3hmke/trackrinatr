@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trackrinatr/app/theme.dart';
 import 'package:trackrinatr/screens/home_screen.dart';
 
 void main() {
@@ -13,7 +14,7 @@ class WorkoutApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Workout Tracker',
-      theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: Colors.transparent),
+      theme: AppTheme.theme,
       home: const HomeScreen(),
     );
   }

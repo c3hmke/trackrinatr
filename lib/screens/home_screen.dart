@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trackrinatr/app/theme.dart';
 import 'package:trackrinatr/screens/exercise_screen.dart';
 import 'package:trackrinatr/models/workout.dart';
 import 'package:trackrinatr/models/exercise.dart';
@@ -31,7 +32,7 @@ List<Workout> workouts = [
     exercises: [
       Exercise(name: "Barbell Squats", currentWeight: 70, warmups: [45, 55, 65]),
       Exercise(name: "Bench Press", currentWeight: 185, warmups: [135, 155, 175]),
-      Exercise(name: "Barbell Rows", currentWeight: 155, warmups: [95, 125, 145]),
+      Exercise(name: "Pendlay Row", currentWeight: 155, warmups: [95, 125, 145]),
     ],
   )
 ];
@@ -62,22 +63,18 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
                   const SizedBox(height: 16),
                   const Center(
                     child: Column(
                       children: [
-                        Text("5x5 Trackrinatr",
-                            style: TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            )),
+                        Text("Trackrinatr", style: AppText.heading),
+                        Text("Paper++ workout tracker", style: AppText.caption),
                         SizedBox(height: 4),
-                        Text("Choose your workout for today",
-                            style: TextStyle(color: Colors.blueAccent)),
                       ],
                     ),
                   ),
+
                   const SizedBox(height: 24),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -95,29 +92,25 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ).then((_) => setState(() {}));
                     },
+
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text("🚀 ", style: TextStyle(fontSize: 22)),
                         Column(
                           children: [
-                            const Text("Start Next Workout",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.bold)),
-                            Text(nextWorkout.name,
-                                style: const TextStyle(fontSize: 12)),
+                            const Text("Start Next Workout", style: AppText.body),
                           ],
                         ),
                       ],
                     ),
+
                   ),
+
                   const SizedBox(height: 24),
-                  const Text("All Workouts",
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white)),
+                  const Text("Stronglifts 5x5", style: AppText.subheading),
                   const SizedBox(height: 12),
+
                   Expanded(
                     child: ListView.builder(
                       itemCount: workouts.length,
@@ -136,13 +129,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(workout.name,
-                                    style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white)),
+                                Text(workout.name, style: AppText.subheading),
                                 Text("Last: ${formatDate(workout.lastCompleted)}",
-                                    style: const TextStyle(color: Colors.blueAccent)),
+                                    style: AppText.caption),
                               ],
                             ),
                           ),
@@ -150,6 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
                   ),
+
                 ],
               ),
             ),
