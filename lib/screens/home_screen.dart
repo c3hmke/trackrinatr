@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:trackrinatr/screens/exercise_screen.dart';
 import 'package:trackrinatr/models/workout.dart';
 import 'package:trackrinatr/models/exercise.dart';
+import 'package:trackrinatr/widgets/frosted_card.dart';
 import 'package:trackrinatr/widgets/gradient_background.dart';
 
 
@@ -131,13 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ).then((_) => setState(() {}));
                           },
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(vertical: 6),
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: Colors.white10,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
+                          child: FrostedCard(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
