@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trackrinatr/app/theme.dart';
 import 'package:trackrinatr/models/workout.dart';
 import 'package:trackrinatr/widgets/frosted_card.dart';
 import 'package:trackrinatr/widgets/gradient_background.dart';
@@ -17,6 +18,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
     return GradientBackground(
       child: Scaffold(
         backgroundColor: Colors.transparent,
+
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -24,10 +26,10 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
             icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () => Navigator.pop(context),
           ),
-          title: Text(widget.workout.name,
-              style: const TextStyle(fontWeight: FontWeight.bold)),
+          title: Text(widget.workout.name, style: AppText.heading),
           centerTitle: true,
         ),
+
         body: ListView(
           padding: const EdgeInsets.all(16),
           children: [
@@ -39,39 +41,26 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
-                    Text(exercise.name,
-                        style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white)),
+                    Text(exercise.name, style: AppText.subheading),
                     const SizedBox(height: 12),
 
-                    Text("Working Weight",
-                        style: TextStyle(color: Colors.blue[200], fontSize: 12)),
-                    Text("${exercise.currentWeight}",
-                        style: const TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white)),
+                    Text("Working Weight", style: AppText.small),
+                    Text("${exercise.currentWeight}", style: AppText.important),
                     const SizedBox(height: 12),
 
-                    Text("Warmup Weights",
-                        style: TextStyle(color: Colors.blue[200], fontSize: 12)),
+                    Text("Warmup Weights", style: AppText.small),
                     Wrap(
                       spacing: 8,
-                      children: exercise.warmups
-                          .map((w) => Chip(
-                        label: Text("$w",
-                            style: const TextStyle(color: Colors.white)),
+                      children: exercise.warmups.map((w) => Chip(
+                        label: Text("$w", style: AppText.body),
                         backgroundColor: Colors.blue.withOpacity(0.3),
-                      ))
-                          .toList(),
+                      )).toList(),
                     ),
                     const SizedBox(height: 12),
 
-                    Text("Sets Completed",
-                        style: TextStyle(color: Colors.blue[200], fontSize: 12)),
+                    Text("Sets Completed", style: AppText.small),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: List.generate(5, (setIndex) {
                         final completed = exercise.sets[setIndex];
                         return GestureDetector(
@@ -97,8 +86,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                                   ? const Icon(Icons.check,
                                   color: Colors.white, size: 18)
                                   : Text("${setIndex + 1}",
-                                  style: const TextStyle(
-                                      color: Colors.blueAccent)),
+                                  style: AppText.caption),
                             ),
                           ),
                         );
@@ -111,7 +99,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
 
             ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.purple,
+                backgroundColor: AppColors.accent,
                 minimumSize: const Size.fromHeight(60),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
@@ -126,9 +114,8 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                   content: Text("🎉 Completed ${widget.workout.name}!"),
                 ));
               },
-              icon: const Icon(Icons.check, size: 22),
-              label: const Text("Complete Workout",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              icon: const Icon(Icons.check, size: 28),
+              label: const Text("Complete Workout", style: AppText.subheading),
             )
           ],
         ),
