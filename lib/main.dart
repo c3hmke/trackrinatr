@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:trackrinatr/models/workout.dart';
+import 'package:trackrinatr/models/exercise.dart';
 
 void main() {
   runApp(const WorkoutApp());
@@ -24,34 +26,6 @@ class WorkoutApp extends StatelessWidget {
       home: const HomeScreen(),
     );
   }
-}
-
-class Workout {
-  final int id;
-  final String name;
-  DateTime lastCompleted;
-  final List<Exercise> exercises;
-
-  Workout({
-    required this.id,
-    required this.name,
-    required this.lastCompleted,
-    required this.exercises,
-  });
-}
-
-class Exercise {
-  final String name;
-  final int currentWeight;
-  final List<int> warmups;
-  List<bool> sets;
-
-  Exercise({
-    required this.name,
-    required this.currentWeight,
-    required this.warmups,
-    this.sets = const [false, false, false, false, false],
-  });
 }
 
 List<Workout> workouts = [
