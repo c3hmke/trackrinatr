@@ -3,8 +3,9 @@ import 'package:trackrinatr/app/theme.dart';
 import 'package:trackrinatr/screens/exercise_screen.dart';
 import 'package:trackrinatr/models/workout.dart';
 import 'package:trackrinatr/models/exercise.dart';
-import 'package:trackrinatr/widgets/frosted_card.dart';
+import 'package:trackrinatr/widgets/workout_list_item.dart';
 import 'package:trackrinatr/widgets/gradient_background.dart';
+
 
 
 class HomeScreen extends StatefulWidget {
@@ -41,13 +42,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Workout getNextWorkout() {
     workouts.sort((a, b) => b.lastCompleted.compareTo(a.lastCompleted));
     return workouts.first;
-  }
-
-  String formatDate(DateTime date) {
-    final diffDays = DateTime.now().difference(date).inDays;
-    if (diffDays == 0) return "Today";
-    if (diffDays == 1) return "Yesterday";
-    return "$diffDays days ago";
   }
 
   @override
@@ -115,26 +109,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: ListView.builder(
                       itemCount: workouts.length,
                       itemBuilder: (context, index) {
-                        final workout = workouts[index];
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => ExerciseScreen(workout: workout),
-                              ),
-                            ).then((_) => setState(() {}));
-                          },
-                          child: FrostedCard(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(workout.name, style: AppText.subheading),
-                                Text("Last: ${formatDate(workout.lastCompleted)}",
-                                    style: AppText.caption),
-                              ],
-                            ),
-                          ),
+                        return WorkoutListItem(
+                          workout: workouts[index],
+                          onUpdated: () => setState(() {})
                         );
                       },
                     ),
