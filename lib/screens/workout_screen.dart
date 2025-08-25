@@ -33,35 +33,26 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
         body: ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            ...widget.workout.exercises.asMap().entries.map(
-                    (entry) => ExerciseCard(
-                        exercise: entry.value,
-                        onChanged: () => setState(() {})
-                    )
-            ),
-
-            ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.accent,
-                minimumSize: const Size.fromHeight(60),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-              ),
-              onPressed: () {
-                setState(() {
-                  widget.workout.lastCompleted = DateTime.now();
-                });
-                Navigator.pop(context);
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text("🎉 Completed ${widget.workout.name}!"),
-                ));
-              },
-              icon: const Icon(Icons.check, size: 28),
-              label: const Text("Complete Workout", style: AppText.subheading),
+            ...widget.workout.exercises.asMap().entries.map((entry) =>
+              ExerciseCard(
+                exercise: entry.value,
+                onChanged: () => setState(() {})
+              )
             )
-          ],
+          ]
         ),
+
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            widget.workout.lastCompleted = DateTime.now();
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.check),
+          label: const Text("Complete Workout", style: AppText.subheading),
+          backgroundColor: AppColors.accentAlt,
+
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     ));
   }
 }
