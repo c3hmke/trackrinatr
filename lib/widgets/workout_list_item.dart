@@ -34,7 +34,7 @@ class WorkoutListItem extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (_) => ExerciseScreen(workout: workout),
+            builder: (_) => WorkoutScreen(workout: workout),
           ),
         ).then((_) => onUpdated());
       },

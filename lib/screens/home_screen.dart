@@ -82,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => ExerciseScreen(workout: nextWorkout),
+                          builder: (_) => WorkoutScreen(workout: nextWorkout),
                         ),
                       ).then((_) => setState(() {}));
                     },

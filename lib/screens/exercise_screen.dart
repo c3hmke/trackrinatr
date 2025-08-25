@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:trackrinatr/app/theme.dart';
 import 'package:trackrinatr/models/workout.dart';
 import 'package:trackrinatr/widgets/exercise_card.dart';
-import 'package:trackrinatr/widgets/frosted_card.dart';
 import 'package:trackrinatr/widgets/gradient_background.dart';
 
-class ExerciseScreen extends StatefulWidget {
+class WorkoutScreen extends StatefulWidget {
   final Workout workout;
-  const ExerciseScreen({super.key, required this.workout});
+  const WorkoutScreen({super.key, required this.workout});
 
   @override
-  State<ExerciseScreen> createState() => _ExerciseScreenState();
+  State<WorkoutScreen> createState() => _WorkoutScreenState();
 }
 
-class _ExerciseScreenState extends State<ExerciseScreen> {
+class _WorkoutScreenState extends State<WorkoutScreen> {
   @override
   Widget build(BuildContext context) {
     return GradientBackground(
