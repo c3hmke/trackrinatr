@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trackrinatr/app/theme.dart';
 import 'package:trackrinatr/models/workout.dart';
-import 'package:trackrinatr/screens/exercise_screen.dart';
+import 'package:trackrinatr/screens/workout_screen.dart';
 import 'package:trackrinatr/widgets/frosted_card.dart';
 
 class WorkoutListItem extends StatelessWidget {
