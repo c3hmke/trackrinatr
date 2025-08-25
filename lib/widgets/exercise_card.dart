@@ -24,28 +24,47 @@ class _ExerciseCardState extends State<ExerciseCard> {
     final exercise = widget.exercise;
 
     return FrostedCard(
+
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
 
-          Text(exercise.name, style: AppText.subheading),
-          const SizedBox(height: 12),
+          Row( // Name + Weights
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Left side (Name + warmup weights)
+              Expanded(child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(exercise.name, style: AppText.subheading),
+                  SizedBox(height: 4),
+                  Text("Warmup weights", style: AppText.small),
+                  Wrap(
+                    spacing: 4,
+                    children: exercise.warmups.map((w) => Chip(
+                      label: Text("$w", style: AppText.caption),
+                      backgroundColor: AppColors.primary.withValues(alpha: 0.5),
+                    )).toList(),
+                  ),
 
-          Text("Working Weight", style: AppText.small),
-          Text("${exercise.currentWeight}", style: AppText.important),
-          const SizedBox(height: 12),
+                ],
+              )),
 
-          Text("Warmup Weights", style: AppText.small),
-          Wrap(
-            spacing: 8,
-            children: exercise.warmups.map((w) => Chip(
-              label: Text("$w", style: AppText.body),
-              backgroundColor: Colors.blue.withOpacity(0.3),
-            )).toList(),
+              // Right side (working weight)
+              Column(
+                children: [
+                  SizedBox(height: 18),
+                  Text(
+                    "${exercise.currentWeight}",
+                    style: TextStyle(fontSize: 60, fontWeight: FontWeight.bold),
+                  )
+                ],
+              )
+            ],
           ),
-          const SizedBox(height: 12),
 
-          Text("Sets Completed", style: AppText.small),
+          SizedBox(height: 8),
+          Text("Sets completed", style: AppText.small),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: List.generate(5, (setIndex) {
@@ -79,8 +98,10 @@ class _ExerciseCardState extends State<ExerciseCard> {
               );
             }),
           )
-        ],
+        ]
+
       ),
+
     );
   }
 }
