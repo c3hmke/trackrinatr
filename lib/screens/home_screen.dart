@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:trackrinatr/app/theme.dart';
-import 'package:trackrinatr/screens/exercise_screen.dart';
 import 'package:trackrinatr/models/workout.dart';
 import 'package:trackrinatr/models/exercise.dart';
+import 'package:trackrinatr/widgets/start_workout_button.dart';
+import 'package:trackrinatr/widgets/workout_list.dart';
 import 'package:trackrinatr/widgets/workout_list_item.dart';
 import 'package:trackrinatr/widgets/gradient_background.dart';
 
@@ -49,79 +50,47 @@ class _HomeScreenState extends State<HomeScreen> {
     final nextWorkout = getNextWorkout();
 
     return GradientBackground(
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
 
-                  const SizedBox(height: 16),
-                  const Center(
-                    child: Column(
-                      children: [
-                        Text("Trackrinatr", style: AppText.heading),
-                        Text("Paper++ workout tracker", style: AppText.caption),
-                        SizedBox(height: 4),
-                      ],
-                    ),
+                const SizedBox(height: 18),
+                const Center(
+                  child: Column(
+                    children: [
+                      Text("Trackrinatr", style: AppText.heading),
+                      Text("Paper++ workout tracker", style: AppText.caption),
+                      SizedBox(height: 18),
+                    ],
                   ),
+                ),
 
-                  const SizedBox(height: 24),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                      minimumSize: const Size.fromHeight(60),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => WorkoutScreen(workout: nextWorkout),
-                        ),
-                      ).then((_) => setState(() {}));
-                    },
+                const SizedBox(height: 24),
+                const Text("Stronglifts 5x5", style: AppText.subheading),
+                const SizedBox(height: 12),
 
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text("🚀 ", style: TextStyle(fontSize: 22)),
-                        Column(
-                          children: [
-                            const Text("Start Next Workout", style: AppText.body),
-                          ],
-                        ),
-                      ],
-                    ),
+                Expanded(
+                  child: WorkoutList(
+                      workouts: workouts,
+                      onUpdated: () => setState(() {})
+                  )
+                )
 
-                  ),
-
-                  const SizedBox(height: 24),
-                  const Text("Stronglifts 5x5", style: AppText.subheading),
-                  const SizedBox(height: 12),
-
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: workouts.length,
-                      itemBuilder: (context, index) {
-                        return WorkoutListItem(
-                          workout: workouts[index],
-                          onUpdated: () => setState(() {})
-                        );
-                      },
-                    ),
-                  ),
-
-                ],
-              ),
+              ],
             ),
-      ),
-    )
+          ),
+        ),
+
+        floatingActionButton: StartWorkoutButton(
+            workout: nextWorkout, onFinished: () => setState(() {})
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      )
     );
   }
 }
