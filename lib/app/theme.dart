@@ -45,12 +45,12 @@ class AppColors {
 
   static const primary = Color(0xff4927f5);
   static const accent = Color(0xff9c27b0);
-  static const success = Color(0xff27f549);
+  static const accentAlt = Color(0xff4caf50);
+  static const accentOpt = Color(0xff448aff);
 
   static const textPrimary = Color(0xffffffff);
   static const textSecondary = Color(0xff90caf9);
 
-  static const tertiaryAccent = Color(0xff448aff);
 }
 
 /// Define the text styles used by the application
@@ -59,6 +59,7 @@ class AppText {
   static const subheading = TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.textPrimary);
   static const important = TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: AppColors.textPrimary);
   static const body = TextStyle(fontSize: 16, color: AppColors.textPrimary);
-  static const caption = TextStyle(fontSize: 16, fontStyle: FontStyle.italic ,color: Colors.blueAccent);
+  static const caption = TextStyle(fontSize: 16, fontStyle: FontStyle.italic ,color: AppColors.accentOpt);
+  static const captionAlt = TextStyle(fontSize: 16, fontStyle: FontStyle.italic ,color: AppColors.accentAlt);
   static const small = TextStyle(color: AppColors.textSecondary, fontSize: 12);
 }
