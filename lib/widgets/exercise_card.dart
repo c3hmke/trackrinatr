@@ -102,7 +102,6 @@ class _ExerciseCardState extends State<ExerciseCard> {
             ],
           ),
 
-          SizedBox(height: 8),
           /// This SizedBox contains the completed sets, which acts as a single
           /// large gesture detector and simply increments the number completed
           /// when tapped (since you cannot logically complete set 4 before 3).
@@ -116,36 +115,38 @@ class _ExerciseCardState extends State<ExerciseCard> {
                 setState(() { exercise.completeNextSet(); });
                 widget.onChanged();
               },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Sets completed", style: AppText.small),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: List.generate(exercise.totalSets, (setIndex) {
-                      final completed = exercise.isSetCompleted(setIndex);
-                      return Container(
-                        margin: const EdgeInsets.only(right: 8, top: 8),
-                        width: 36,
-                        height: 36,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                              color: completed ? Colors.green : Colors.blueAccent,
-                              width: 2
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child:Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Sets completed", style: AppText.small),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: List.generate(exercise.totalSets, (setIndex) {
+                        final completed = exercise.isSetCompleted(setIndex);
+                        return Container(
+                          margin: const EdgeInsets.only(right: 8, top: 8),
+                          width: 36,
+                          height: 36,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                                color: completed ? Colors.green : Colors.blueAccent,
+                                width: 2
+                            ),
+                            color: completed ? Colors.green : Colors.transparent,
                           ),
-                          color: completed ? Colors.green : Colors.transparent,
-                        ),
-                        child: Center(
-                          child: completed
-                              ? const Icon(Icons.check, color: Colors.white, size: 18)
-                              : Text("${setIndex + 1}", style: AppText.caption),
-                        ),
-                      );
-                    }),
-                  )
-                ],
-
+                          child: Center(
+                            child: completed
+                                ? const Icon(Icons.check, color: Colors.white, size: 18)
+                                : Text("${setIndex + 1}", style: AppText.caption),
+                          ),
+                        );
+                      }),
+                    )
+                  ],
+                )
               ),
             ),
           )
