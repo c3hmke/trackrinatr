@@ -55,7 +55,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
                   GestureDetector(
                     onTap: () async {
                       final controller = TextEditingController(
-                        text: exercise.currentWeight.toString(),
+                        text: exercise.weight.toString(),
                       );
 
                       final newWeight = await showDialog<double>(
@@ -88,12 +88,12 @@ class _ExerciseCardState extends State<ExerciseCard> {
                       );
 
                       if (newWeight != null) {
-                        setState(() => exercise.currentWeight = newWeight);
+                        setState(() => exercise.weight = newWeight);
                         widget.onChanged();
                       }
                     },
                     child: Text(
-                      "${exercise.currentWeight}",
+                      "${exercise.weight}",
                       style: const TextStyle(fontSize: 52, fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -127,7 +127,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
                     Text("Sets completed", style: AppText.small),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: List.generate(exercise.totalSets, (setIndex) {
+                      children: List.generate(exercise.sets, (setIndex) {
                         final completed = exercise.isSetCompleted(setIndex);
                         return Container(
                           margin: const EdgeInsets.only(right: 8, top: 8),
