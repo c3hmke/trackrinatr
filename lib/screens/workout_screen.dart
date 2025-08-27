@@ -45,7 +45,7 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
             final isComplete = widget.workout.exercises.every(
-              (exercise) => exercise.completedSets == exercise.totalSets
+              (exercise) => exercise.completedSets == exercise.sets
             );
 
             if (isComplete) { _completeWorkout(); }
