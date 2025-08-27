@@ -4,7 +4,6 @@ import 'package:trackrinatr/models/workout.dart';
 import 'package:trackrinatr/models/exercise.dart';
 import 'package:trackrinatr/widgets/start_workout_button.dart';
 import 'package:trackrinatr/widgets/workout_list.dart';
-import 'package:trackrinatr/widgets/workout_list_item.dart';
 import 'package:trackrinatr/widgets/gradient_background.dart';
 
 
