@@ -22,9 +22,9 @@ List<Workout> workouts = [
     name: "Workout A",
     lastCompleted: DateTime(2024, 1, 15),
     exercises: [
-      Exercise(name: "Barbell Squats", currentWeight: 70, warmups: [45, 55, 65]),
-      Exercise(name: "Overhead Press", currentWeight: 135, warmups: [95, 115, 125]),
-      Exercise(name: "Deadlift", currentWeight: 225, warmups: [135, 185, 205]),
+      Exercise(name: "Barbell Squats", currentWeight: 70),
+      Exercise(name: "Overhead Press", currentWeight: 135),
+      Exercise(name: "Deadlift", currentWeight: 225),
     ],
   ),
   Workout(
@@ -32,9 +32,9 @@ List<Workout> workouts = [
     name: "Workout B",
     lastCompleted: DateTime(2024, 1, 13),
     exercises: [
-      Exercise(name: "Barbell Squats", currentWeight: 70, warmups: [45, 55, 65]),
-      Exercise(name: "Bench Press", currentWeight: 185, warmups: [135, 155, 175]),
-      Exercise(name: "Pendlay Row", currentWeight: 155, warmups: [95, 125, 145]),
+      Exercise(name: "Barbell Squats", currentWeight: 70),
+      Exercise(name: "Bench Press", currentWeight: 185),
+      Exercise(name: "Pendlay Row", currentWeight: 155),
     ],
   )
 ];
