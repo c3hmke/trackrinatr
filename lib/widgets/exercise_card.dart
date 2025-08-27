@@ -41,7 +41,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
                   Text("Warmup weights", style: AppText.small),
                   Wrap(
                     spacing: 4,
-                    children: exercise.warmups.map((w) => Chip(
+                    children: exercise.warmupWeights.map((w) => Chip(
                       label: Text("$w", style: AppText.caption),
                       backgroundColor: AppColors.primary.withValues(alpha: 0.5),
                     )).toList(),
