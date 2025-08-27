@@ -2,18 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:trackrinatr/app/theme.dart';
 import 'package:trackrinatr/screens/home_screen.dart';
 
-void main() {
-  runApp(const WorkoutApp());
-}
+void main() => runApp(const App());
 
-class WorkoutApp extends StatelessWidget {
-  const WorkoutApp({super.key});
+class App extends StatelessWidget {
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Workout Tracker',
+      title: 'trackrinatr',
       theme: AppTheme.theme,
       home: const HomeScreen(),
     );
