@@ -1,6 +1,6 @@
 class Exercise {
   final String name;
-  final int currentWeight;
+  double currentWeight;
   List<bool> sets;
 
   Exercise({

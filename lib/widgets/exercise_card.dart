@@ -54,10 +54,53 @@ class _ExerciseCardState extends State<ExerciseCard> {
               Column(
                 children: [
                   SizedBox(height: 18),
-                  Text(
-                    "${exercise.currentWeight}",
-                    style: TextStyle(fontSize: 60, fontWeight: FontWeight.bold),
-                  )
+                  GestureDetector(
+                    onTap: () async {
+                      final controller = TextEditingController(
+                        text: exercise.currentWeight.toString(),
+                      );
+
+                      final newWeight = await showDialog<double>(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text("Update Working Weight"),
+                            content: TextField(
+                              controller: controller,
+                              keyboardType: TextInputType.number,
+                              decoration: const InputDecoration(
+                                labelText: "Weight",
+                              ),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text("Cancel"),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  final value = double.tryParse(controller.text);
+                                  Navigator.pop(context, value);
+                                },
+                                child: const Text("Save"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+
+                      if (newWeight != null) {
+                        setState(() {
+                          exercise.currentWeight = newWeight;
+                        });
+                        widget.onChanged(); // let parent know
+                      }
+                    },
+                    child: Text(
+                      "${exercise.currentWeight}",
+                      style: const TextStyle(fontSize: 52, fontWeight: FontWeight.bold),
+                    ),
+                  ),
                 ],
               )
             ],
