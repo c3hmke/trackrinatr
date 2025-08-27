@@ -44,8 +44,50 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
 
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            widget.workout.lastCompleted = DateTime.now();
-            Navigator.pop(context);
+            final isComplete = widget.workout.exercises.every(
+              (exercise) => exercise.completedSets == exercise.totalSets
+            );
+
+            if (isComplete) { _completeWorkout(); }
+            else {
+              showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text(
+                        "Incomplete Workout!",
+                        style: AppText.heading,
+                        textAlign: TextAlign.center
+                    ),
+                    content: const Text(
+                        "You haven't completed all sets.\n"
+                        "Do you want to log this workout as is?",
+                        style: AppText.body,
+                        textAlign: TextAlign.center),
+                    actionsAlignment: MainAxisAlignment.spaceBetween,
+                    actions: [
+                      OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          side: const BorderSide(color: AppColors.accentAlt, width: 2),
+                          foregroundColor: AppColors.accentAlt
+                        ),
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text("cancel")
+                      ),
+                      OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                              side: const BorderSide(color: Colors.amber, width: 2),
+                              foregroundColor: Colors.amber
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            _completeWorkout();
+                          },
+                          child: const Text("complete")
+                      )
+                    ],
+                  )
+              );
+            }
           },
           icon: const Icon(Icons.check),
           label: const Text("Complete Workout", style: AppText.subheading),
@@ -54,5 +96,10 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     ));
+  }
+
+  void _completeWorkout() {
+    widget.workout.lastCompleted = DateTime.now();
+    Navigator.pop(context);
   }
 }
