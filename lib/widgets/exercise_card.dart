@@ -112,7 +112,11 @@ class _ExerciseCardState extends State<ExerciseCard> {
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onTap: () {
-                setState(() { exercise.completeNextSet(); });
+                setState(() => exercise.completeNextSet());
+                widget.onChanged();
+              },
+              onLongPress: () {
+                setState(() => exercise.undoSet());
                 widget.onChanged();
               },
               child: Padding(
