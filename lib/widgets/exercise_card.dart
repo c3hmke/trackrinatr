@@ -26,11 +26,9 @@ class _ExerciseCardState extends State<ExerciseCard> {
     return FrostedCard(
 
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
 
           Row( // Name + Weights
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Left side (Name + warmup weights)
               Expanded(child: Column(
@@ -90,10 +88,8 @@ class _ExerciseCardState extends State<ExerciseCard> {
                       );
 
                       if (newWeight != null) {
-                        setState(() {
-                          exercise.currentWeight = newWeight;
-                        });
-                        widget.onChanged(); // let parent know
+                        setState(() => exercise.currentWeight = newWeight);
+                        widget.onChanged();
                       }
                     },
                     child: Text(
@@ -107,40 +103,43 @@ class _ExerciseCardState extends State<ExerciseCard> {
           ),
 
           SizedBox(height: 8),
-          Text("Sets completed", style: AppText.small),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: List.generate(5, (setIndex) {
-              final completed = exercise.sets[setIndex];
-              return GestureDetector(
-                onTap: () {
-                  setState(() {
-                    exercise.sets[setIndex] = !completed;
-                  });
-                },
-                child: Container(
-                  margin: const EdgeInsets.only(right: 8, top: 8),
-                  width: 36,
-                  height: 36,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                        color:
-                        completed ? Colors.green : Colors.blueAccent,
-                        width: 2),
-                    color: completed ? Colors.green : Colors.transparent,
-                  ),
-                  child: Center(
-                    child: completed
-                        ? const Icon(Icons.check,
-                        color: Colors.white, size: 18)
-                        : Text("${setIndex + 1}",
-                        style: AppText.caption),
-                  ),
-                ),
-              );
-            }),
-          )
+          GestureDetector(
+            onTap: () {
+              setState(() { exercise.completeNextSet(); });
+              widget.onChanged();
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Sets completed", style: AppText.small),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: List.generate(exercise.totalSets, (setIndex) {
+                    final completed = exercise.isSetCompleted(setIndex);
+                    return Container(
+                      margin: const EdgeInsets.only(right: 8, top: 8),
+                      width: 36,
+                      height: 36,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                            color: completed ? Colors.green : Colors.blueAccent,
+                            width: 2
+                        ),
+                        color: completed ? Colors.green : Colors.transparent,
+                      ),
+                      child: Center(
+                        child: completed
+                            ? const Icon(Icons.check, color: Colors.white, size: 18)
+                            : Text("${setIndex + 1}", style: AppText.caption),
+                      ),
+                    );
+                  }),
+                )
+              ],
+
+            ),
+          ),
         ]
 
       ),
