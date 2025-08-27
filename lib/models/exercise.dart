@@ -28,6 +28,9 @@ class Exercise {
   void completeNextSet() =>
     completedSets = completedSets < totalSets ? completedSets + 1 : 0;
 
+  /// This provides an alternative method for decreasing the number of sets.
+  void undoSet() => completedSets -= 1;
+
   /// Determine if a 'specific' set has already been completed based on
   /// the total number of sets and current set number.
   bool isSetCompleted(int set) => set < completedSets;
