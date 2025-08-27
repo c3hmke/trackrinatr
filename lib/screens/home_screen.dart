@@ -17,23 +17,21 @@ class HomeScreen extends StatefulWidget {
 
 List<Workout> workouts = [
   Workout(
-    id: 1,
     name: "Workout A",
     lastCompleted: DateTime(2024, 1, 15),
     exercises: [
-      Exercise(name: "Barbell Squats", currentWeight: 70, totalSets: 5),
-      Exercise(name: "Overhead Press", currentWeight: 135, totalSets: 5),
-      Exercise(name: "Deadlift", currentWeight: 225, totalSets: 1),
+      Exercise(name: "Barbell Squats", weight: 70, sets: 5),
+      Exercise(name: "Overhead Press", weight: 135, sets: 5),
+      Exercise(name: "Deadlift", weight: 225, sets: 1),
     ],
   ),
   Workout(
-    id: 2,
     name: "Workout B",
     lastCompleted: DateTime(2024, 1, 13),
     exercises: [
-      Exercise(name: "Barbell Squats", currentWeight: 70, totalSets: 5),
-      Exercise(name: "Bench Press", currentWeight: 185, totalSets: 5),
-      Exercise(name: "Pendlay Row", currentWeight: 155, totalSets: 5),
+      Exercise(name: "Barbell Squats", weight: 70, sets: 5),
+      Exercise(name: "Bench Press", weight: 185, sets: 5),
+      Exercise(name: "Pendlay Row", weight: 155, sets: 5),
     ],
   )
 ];

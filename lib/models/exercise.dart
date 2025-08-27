@@ -1,13 +1,14 @@
 class Exercise {
   final String name;
-  final int totalSets;
+  double weight;
+  final int sets;
   int completedSets;
-  double currentWeight;
+
 
   Exercise({
     required this.name,
-    required this.currentWeight,
-    required this.totalSets,
+    required this.weight,
+    required this.sets,
     this.completedSets = 0,
   });
 
@@ -16,9 +17,9 @@ class Exercise {
   /// performed at 40, 50, 60% of the working weight. This is something
   /// that may be configurable in future.
   List<int> get warmupWeights => [
-    (currentWeight * 0.4).round(),
-    (currentWeight * 0.5).round(),
-    (currentWeight * 0.6).round(),
+    (weight * 0.4).round(),
+    (weight * 0.5).round(),
+    (weight * 0.6).round(),
   ];
 
   /// Increment the number of completed sets. If it exceeds the total sets
@@ -26,7 +27,7 @@ class Exercise {
   /// interact with while busy, but still offer a way to loop around if
   /// a mistake is made.
   void completeNextSet() =>
-    completedSets = completedSets < totalSets ? completedSets + 1 : 0;
+    completedSets = completedSets < sets ? completedSets + 1 : 0;
 
   /// This provides an alternative method for decreasing the number of sets.
   void undoSet() => completedSets -= 1;
