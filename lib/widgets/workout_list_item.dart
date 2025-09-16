@@ -14,7 +14,9 @@ class WorkoutListItem extends StatelessWidget {
     required this.onUpdated,
   });
 
-  String formatDate(DateTime date) {
+  String formatDate(DateTime? date) {
+    if (date == null) return "Never";
+
     final diffDays = DateTime.now().difference(date).inDays;
 
     switch (diffDays) {

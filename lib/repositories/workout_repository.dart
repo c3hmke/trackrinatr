@@ -18,17 +18,20 @@ class WorkoutRepository {
   Future<void> save(Workout workout) async {
     await _box.put(workout.name, {
       'name': workout.name,
-      'lastCompleted': workout.lastCompleted.toIso8601String(),
+      'lastCompleted': workout.lastCompleted?.toIso8601String(),
       'exercises': workout.exercises.map((e) => e.name).toList(),
     });
   }
 
   Workout? get(String name, Map<String, Exercise> exerciseMap) {
     final data = _box.get(name);
+
     return (data == null) ? null :
       Workout(
         name: data['name'],
-        lastCompleted: DateTime.parse(data['lastCompleted']),
+        lastCompleted: data['lastCompleted'] != null
+            ? DateTime.parse(data['lastCompleted'])
+            : null,
         exercises: (data['exercises'] as List)
             .map((n) => exerciseMap[n]!)
             .toList(),
@@ -38,7 +41,9 @@ class WorkoutRepository {
   Future<List<Workout>> getAll(Map<String, Exercise> exerciseMap) async {
     return _box.values.map((data) => Workout(
       name: data['name'],
-      lastCompleted: DateTime.parse(data['lastCompleted']),
+      lastCompleted: data['lastCompleted'] != null
+          ? DateTime.parse(data['lastCompleted'])
+          : null,
       exercises: (data['exercises'] as List).map((n) => exerciseMap[n]!).toList(),
     )).toList();
   }

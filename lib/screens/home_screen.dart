@@ -42,7 +42,19 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Workout _getNextWorkout(List<Workout> workouts) {
-    workouts.sort((a, b) => b.lastCompleted.compareTo(a.lastCompleted));
+    /// Sort the workouts by date desc (null should be considered newer,
+    /// since that will then go on the list before completed workouts)
+    workouts.sort((a, b) {
+      final aDate = a.lastCompleted;
+      final bDate = b.lastCompleted;
+
+      if (aDate == null && bDate == null) return 0;
+      if (aDate == null) return -1;  // a comes first (newer)
+      if (bDate == null) return 1;   // b comes first (newer)
+
+      return bDate.compareTo(aDate); // newest first
+    });
+
     return workouts.first;
   }
 
