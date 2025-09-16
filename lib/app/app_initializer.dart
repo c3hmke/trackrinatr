@@ -45,12 +45,12 @@ class AppInitializer {
     await workoutRepository.save(Workout(
       name: "Workout A",
       exercises: [squat, bench, row],
-      lastCompleted: DateTime(1970),
+      lastCompleted: null,
     ));
     await workoutRepository.save(Workout(
       name: "Workout B",
       exercises: [squat, ohp, deadlift],
-      lastCompleted: DateTime(1970),
+      lastCompleted: null,
     ));
   }
 }
