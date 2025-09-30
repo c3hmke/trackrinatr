@@ -121,6 +121,7 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
     widget.workout.lastCompleted = DateTime.now();
     await _workoutRepository.save(widget.workout);
 
-    Navigator.pop(context);
+    if (!mounted) return;   // if the widget is no longer in the tree due to
+    Navigator.pop(context); // async shenanigans just return, otherwise pop
   }
 }

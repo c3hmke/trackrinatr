@@ -1,3 +1,5 @@
+import 'package:trackrinatr/services/warmup_weight_calculator.dart';
+
 class Exercise {
   final String name;
   double weight;
@@ -16,11 +18,7 @@ class Exercise {
   /// This is currently based on the 5x5 program where the warmup sets are
   /// performed at 40, 50, 60% of the working weight. This is something
   /// that may be configurable in future.
-  List<int> get warmupWeights => [
-    (weight * 0.4).round(),
-    (weight * 0.5).round(),
-    (weight * 0.6).round(),
-  ];
+  List<double> get warmupWeights => WarmupWeightCalculator.getWarmupWeights(weight);
 
   /// Increment the number of completed sets. If it exceeds the total sets
   /// wrap around to 0. This is done to make the tapping area easier to
