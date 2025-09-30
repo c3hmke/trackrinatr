@@ -1,5 +1,7 @@
 import 'package:trackrinatr/services/warmup_weight_calculator.dart';
 
+/// The Exercise class holds the current working set of information for an
+/// exercise. This represents the working information for an Exercise.
 class Exercise {
   final String name;
   double weight;
