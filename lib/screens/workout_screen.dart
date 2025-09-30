@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart' show Provider;
 import 'package:trackrinatr/app/theme.dart';
 import 'package:trackrinatr/models/workout.dart';
+import 'package:trackrinatr/repositories/exercise_repository.dart';
+import 'package:trackrinatr/repositories/workout_repository.dart';
 import 'package:trackrinatr/widgets/exercise_card.dart';
 import 'package:trackrinatr/widgets/gradient_background.dart';
 
@@ -13,6 +16,16 @@ class WorkoutScreen extends StatefulWidget {
 }
 
 class _WorkoutScreenState extends State<WorkoutScreen> {
+  late final ExerciseRepository _exerciseRepository;
+  late final WorkoutRepository _workoutRepository;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _exerciseRepository = Provider.of<ExerciseRepository>(context, listen: false);
+    _workoutRepository = Provider.of<WorkoutRepository>(context, listen: false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GradientBackground(
@@ -98,8 +111,16 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
     ));
   }
 
-  void _completeWorkout() {
+  void _completeWorkout() async {
+    /// Save the exercises which have just been completed
+    await Future.wait(
+        widget.workout.exercises.map((e) => _exerciseRepository.save(e))
+    );
+
+    /// update and save the workout
     widget.workout.lastCompleted = DateTime.now();
+    await _workoutRepository.save(widget.workout);
+
     Navigator.pop(context);
   }
 }
