@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:trackrinatr/app/app.dart';
 import 'package:trackrinatr/app/app_initializer.dart';
 import 'package:trackrinatr/repositories/exercise_repository.dart';
@@ -13,14 +14,14 @@ void main() async {
   final exerciseRepo = await ExerciseRepository.init();
   final workoutRepo = await WorkoutRepository.init();
 
-  final initializer = AppInitializer(
-    workoutRepository: workoutRepo,
-    exerciseRepository: exerciseRepo,
-  );
-  await initializer.initializeData();
+  runApp(
+    MultiProvider(
+      providers: [
+        Provider<WorkoutRepository>.value(value: workoutRepo),
+        Provider<ExerciseRepository>.value(value: exerciseRepo),
+      ],
 
-  runApp(App(
-    workoutRepository: workoutRepo,
-    exerciseRepository: exerciseRepo,
-  ));
+      child: const App()
+    )
+  );
 }

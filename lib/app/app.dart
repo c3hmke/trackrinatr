@@ -5,14 +5,7 @@ import 'package:trackrinatr/repositories/exercise_repository.dart';
 import 'package:trackrinatr/repositories/workout_repository.dart';
 
 class App extends StatelessWidget {
-  final ExerciseRepository exerciseRepository;
-  final WorkoutRepository workoutRepository;
-
-  const App({
-    super.key,
-    required this.exerciseRepository,
-    required this.workoutRepository,
-  });
+  const App({ super.key });
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +13,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'trackrinatr',
       theme: AppTheme.theme,
-      home: HomeScreen(
-        workoutRepository: workoutRepository,
-        exerciseRepository: exerciseRepository,
-      ),
+      home: HomeScreen(),
     );
   }
 }

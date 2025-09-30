@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:trackrinatr/app/theme.dart';
 import 'package:trackrinatr/models/workout.dart';
 import 'package:trackrinatr/widgets/start_workout_button.dart';
@@ -8,14 +9,7 @@ import 'package:trackrinatr/repositories/exercise_repository.dart';
 import 'package:trackrinatr/repositories/workout_repository.dart';
 
 class HomeScreen extends StatefulWidget {
-  final WorkoutRepository workoutRepository;
-  final ExerciseRepository exerciseRepository;
-
-  const HomeScreen({
-    super.key,
-    required this.workoutRepository,
-    required this.exerciseRepository,
-  });
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -23,6 +17,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late Future<List<Workout>> _workouts;
+  late final WorkoutRepository workoutRepository;
+  late final ExerciseRepository exerciseRepository;
 
   @override
   void initState() {
@@ -30,15 +26,23 @@ class _HomeScreenState extends State<HomeScreen> {
     _loadWorkouts();
   }
 
-  void _loadWorkouts() {
-    _workouts = _fetchWorkouts();
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    workoutRepository = context.read<WorkoutRepository>();
+    exerciseRepository = context.read<ExerciseRepository>();
+    _loadWorkouts();
   }
+
+  void _loadWorkouts() => _workouts = _fetchWorkouts();
 
   Future<List<Workout>> _fetchWorkouts() async {
     final exercises = {
-      for (var e in await widget.exerciseRepository.getAll()) e.name: e
+      for (var e in await exerciseRepository.getAll()) e.name: e
     };
-    return widget.workoutRepository.getAll(exercises);
+
+    return workoutRepository.getAll(exercises);
   }
 
   Workout _getNextWorkout(List<Workout> workouts) {
