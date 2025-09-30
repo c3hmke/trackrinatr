@@ -1,12 +1,26 @@
 ---
 # Configuration for the Jekyll template "Just the Docs"
 parent: Decisions
-nav_order: 1
+nav_order: 2
 title: Using an ExerciseLog model over adding information to the Exercise model.
 
 ---
 
 # Using an ExerciseLog model over adding information to the Exercise model
+
+## Decision Outcome
+
+Chosen option: **Introduce `ExerciseLog` model**, because it clearly separates responsibilities:
+- `Exercise` = current state (template for workouts).
+- `ExerciseLog` = append-only history (immutable records).  
+  This improves clarity, query simplicity, and scalability for future features.
+
+### Consequences
+
+* Logs remain immutable, simplifying reasoning and analytics.
+* Current exercise state is always retrievable without filtering or grouping.
+* Scales better with large histories.
+* Introduces extra boilerplate (a second repository and box to maintain).
 
 ## Context and Problem Statement
 
@@ -27,20 +41,6 @@ The question: **Should exercise history be tracked directly in `Exercise` or sho
 
 * Add `completedDate` to `Exercise` and store both templates and history in the same box (composite key).
 * Introduce a separate `ExerciseLog` model with its own repository and box.
-
-## Decision Outcome
-
-Chosen option: **Introduce `ExerciseLog` model**, because it clearly separates responsibilities:
-- `Exercise` = current state (template for workouts).
-- `ExerciseLog` = append-only history (immutable records).  
-  This improves clarity, query simplicity, and scalability for future features.
-
-### Consequences
-
-* Logs remain immutable, simplifying reasoning and analytics.
-* Current exercise state is always retrievable without filtering or grouping.
-* Scales better with large histories.
-* Introduces extra boilerplate (a second repository and box to maintain).
 
 ## Pros and Cons of the Options
 
