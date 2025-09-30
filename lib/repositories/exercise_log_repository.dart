@@ -1,9 +1,10 @@
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:trackrinatr/models/exercise.dart';
 import 'package:trackrinatr/models/exercise_log.dart';
 
 class ExerciseLogRepository {
   static const _boxName = 'exercise_logs';
-  final Box _box;
+  final Box    _box;
 
   ExerciseLogRepository._(this._box);
 
@@ -12,14 +13,15 @@ class ExerciseLogRepository {
     return ExerciseLogRepository._(await Hive.openBox(_boxName));
   }
 
-  /// Store a log of a completed exercise
-  Future<void> save(ExerciseLog log) async {
+  /// Saves an exercise to the logs
+  Future<void> log(Exercise exercise, DateTime? date) async {
+    date = date ?? DateTime.now();
     await _box.add({
-      'name':          log.name,
-      'weight':        log.weight,
-      'sets':          log.sets,
-      'completedSets': log.completedSets,
-      'completedDate': log.completedDate.toIso8601String(),
+      'name':          exercise.name,
+      'weight':        exercise.weight,
+      'sets':          exercise.sets,
+      'completedSets': exercise.completedSets,
+      'completedDate': date.toIso8601String(),
     });
   }
 

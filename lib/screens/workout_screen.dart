@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart' show Provider;
 import 'package:trackrinatr/app/theme.dart';
+import 'package:trackrinatr/models/exercise.dart';
 import 'package:trackrinatr/models/workout.dart';
+import 'package:trackrinatr/repositories/exercise_log_repository.dart';
 import 'package:trackrinatr/repositories/exercise_repository.dart';
 import 'package:trackrinatr/repositories/workout_repository.dart';
 import 'package:trackrinatr/widgets/exercise_card.dart';
@@ -18,12 +20,14 @@ class WorkoutScreen extends StatefulWidget {
 class _WorkoutScreenState extends State<WorkoutScreen> {
   late final ExerciseRepository _exerciseRepository;
   late final WorkoutRepository _workoutRepository;
+  late final ExerciseLogRepository _logRepository;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _exerciseRepository = Provider.of<ExerciseRepository>(context, listen: false);
-    _workoutRepository = Provider.of<WorkoutRepository>(context, listen: false);
+    _workoutRepository  = Provider.of<WorkoutRepository>(context, listen: false);
+    _logRepository      = Provider.of<ExerciseLogRepository>(context, listen: false);
   }
 
   @override
@@ -112,15 +116,28 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
   }
 
   void _completeWorkout() async {
-    /// Save the exercises which have just been completed
-    await Future.wait(
-        widget.workout.exercises.map((e) => _exerciseRepository.save(e))
-    );
+    final now = DateTime.now();
 
-    /// update and save the workout
-    widget.workout.lastCompleted = DateTime.now();
+    /// Concurrently log & update the completed exercises
+    await Future.wait(widget.workout.exercises.map((e) async {
+      /// Add a log entry for this exercise
+      await _logRepository.log(e, now);
+
+      /// Update the template exercise to reflect progress
+      final updatedTemplate = Exercise(
+        name:          e.name,
+        weight:        e.completedSets == e.sets ? e.weight + 2.5 : e.weight,
+        sets:          e.sets,
+        completedSets: 0,
+      );
+      await _exerciseRepository.save(updatedTemplate);
+    }));
+
+    /// Update and save the Workout information
+    widget.workout.lastCompleted = now;
     await _workoutRepository.save(widget.workout);
 
+    /// Return to the previous screen
     if (!mounted) return;   // if the widget is no longer in the tree due to
     Navigator.pop(context); // async shenanigans just return, otherwise pop
   }
