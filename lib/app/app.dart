@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trackrinatr/app/theme.dart';
 import 'package:trackrinatr/screens/home_screen.dart';
-import 'package:trackrinatr/repositories/exercise_repository.dart';
-import 'package:trackrinatr/repositories/workout_repository.dart';
 
 class App extends StatelessWidget {
   const App({ super.key });
