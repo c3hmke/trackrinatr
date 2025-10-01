@@ -115,26 +115,34 @@ class _WorkoutScreenState extends State<WorkoutScreen> {
     ));
   }
 
+  /// Complete a workout, this will log the progress on exercises completed
+  /// and update the working weights if all sets have been completed as well
+  /// as reset the working models so they're ready for the next session.
   void _completeWorkout() async {
     final now = DateTime.now();
 
     /// Concurrently log & update the completed exercises
-    await Future.wait(widget.workout.exercises.map((e) async {
-      /// Add a log entry for this exercise
-      await _logRepository.log(e, now);
+    final updatedExercises = await Future.wait(
+      widget.workout.exercises.map((e) async {
+        await _logRepository.log(e, now);
 
-      /// Update the template exercise to reflect progress
-      final updatedTemplate = Exercise(
-        name:          e.name,
-        weight:        e.completedSets == e.sets ? e.weight + 2.5 : e.weight,
-        sets:          e.sets,
-        completedSets: 0,
-      );
-      await _exerciseRepository.save(updatedTemplate);
-    }));
+        final updated = Exercise(
+          name:          e.name,
+          weight:        e.completedSets == e.sets ? e.weight + 2.5 : e.weight,
+          sets:          e.sets,
+          completedSets: 0,
+        );
 
-    /// Update and save the Workout information
-    widget.workout.lastCompleted = now;
+        await _exerciseRepository.save(updated);
+        return updated;
+      }),
+    );
+
+    /// Update & save the Workout information
+    widget.workout
+      ..lastCompleted = now
+      ..exercises     = updatedExercises;
+
     await _workoutRepository.save(widget.workout);
 
     /// Return to the previous screen

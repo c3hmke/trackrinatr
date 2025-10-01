@@ -7,7 +7,7 @@ import 'package:trackrinatr/models/exercise.dart';
 class Workout {
   final String name;
   DateTime? lastCompleted;
-  final List<Exercise> exercises;
+  List<Exercise> exercises;
 
   Workout({
     required this.name,
