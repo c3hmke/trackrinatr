@@ -30,36 +30,37 @@ class _HomeScreenState extends State<HomeScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    workoutRepository = context.read<WorkoutRepository>();
+    workoutRepository  = context.read<WorkoutRepository>();
     exerciseRepository = context.read<ExerciseRepository>();
     _loadWorkouts();
   }
 
   void _loadWorkouts() => _workouts = _fetchWorkouts();
-
   Future<List<Workout>> _fetchWorkouts() async {
+    /// Get all the exercises, so they can be updated in UI
     final exercises = {
       for (var e in await exerciseRepository.getAll()) e.name: e
     };
 
-    return workoutRepository.getAll(exercises);
-  }
+    /// Get all the workouts to display the list on the home page
+    final workouts = await workoutRepository.getAll(exercises);
 
-  Workout _getNextWorkout(List<Workout> workouts) {
-    /// Sort the workouts by date desc (null should be considered newer,
-    /// since that will then go on the list before completed workouts)
+    /// Order the workouts so those with the oldest last completed
+    /// date go to the top. Most programs are cyclical so this will
+    /// produce the order in which they should be completed. If a
+    /// workout has never been completed, it's considered the oldest.
     workouts.sort((a, b) {
       final aDate = a.lastCompleted;
       final bDate = b.lastCompleted;
 
       if (aDate == null && bDate == null) return 0;
-      if (aDate == null) return -1;  // a comes first (newer)
-      if (bDate == null) return 1;   // b comes first (newer)
+      if (aDate == null) return -1;  // a comes first (never done)
+      if (bDate == null) return 1;   // b comes first (never done)
 
-      return bDate.compareTo(aDate); // newest first
+      return aDate.compareTo(bDate); // oldest first
     });
 
-    return workouts.first;
+    return workouts;
   }
 
   @override
@@ -86,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 }
 
                 final workouts = snapshot.data!;
-                final nextWorkout = _getNextWorkout(workouts);
+                final nextWorkout = workouts.first;
 
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
           future: _workouts,
           builder: (context, snapshot) {
             if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-              final nextWorkout = _getNextWorkout(snapshot.data!);
+              final nextWorkout = snapshot.data!.first;
               return StartWorkoutButton(
                 workout: nextWorkout,
                 onFinished: () => setState(() => _loadWorkouts()),
