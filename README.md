@@ -1,6 +1,8 @@
 # trackrinatrr
 
-Paper++ workout tracker
+Paper++ workout tracker, started as a way to play with dart apps. Figured I may as well make something
+useful to myself. Eventually canned it because monetizing the app seems to defeat the purpose and the
+yearly iOS developer fee was much too high to justify without monetization.
 
 The core of this application is to be a digital logbook. It was born out of frustration with the
 bombardment of features in fitness applications when all I really ever wanted was a convenient way
